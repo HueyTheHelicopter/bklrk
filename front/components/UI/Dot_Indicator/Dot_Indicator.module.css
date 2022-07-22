@@ -1,0 +1,11 @@
+.dot_Indicator {
+    display: none;
+    border-radius: 50%;
+}
+
+.dot_Indicator.active {
+    height: 25px;
+    width: 25px;
+    background-color: #12C70C;
+    display: flex;
+}

@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "147.232.24.160",
+            "port": 49153,
+            "driver": "PostgreSQL",
+            "password": "metadon",
+            "database": "smart-space-dev",
+            "username": "spot",
+            "name": "smart-space-dev"
+        }
+    ]
+}

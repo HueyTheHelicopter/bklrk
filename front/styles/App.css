@@ -1,0 +1,134 @@
+::-webkit-scrollbar {
+    display: block;
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background: lightgray;
+}
+
+::-webkit-scrollbar-thumb {
+    background: teal;
+    border-right: none;
+    border-left: none;
+}
+
+::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+}
+
+::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 50px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.App {
+    width: 800px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    height: 94.9vh;
+    width: 100%;
+}
+.col {
+    height: 100%;
+    width: 100%;
+}
+.leftside, .rightside {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.rightside.cam_nav {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+}
+
+.leftside {
+    background: #3D5664;
+}
+.rightside {
+    background: #C4C4C4;
+}
+
+.camera, .preset {
+    display: flex;
+    padding: 15px;
+    border: 2px solid teal;
+    margin-top: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.camera__content, .preset__content {
+    display: table-row;
+}
+
+.cam_btns.all {
+    margin: auto;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-rows: 55px 55px 55px 55px;
+    grid-template-columns: 55px 55px 55px;
+    align-items: stretch;
+}
+
+.cam_btns.opn{
+    margin-left: 1%;
+}
+
+.cam_btns.prst {
+    display: contents;
+    position:fixed;
+    align-items: center;  
+}
+
+.cam_info {
+    padding: 5px 10px;
+    margin: auto;
+    display: grid;
+    grid-gap: 5px;
+    align-content: space-around;
+    background-color: #3D5664;
+    border: 5px solid teal;
+    border-radius: 5px;
+    place-items: center;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: lightgray;
+}
+
+.navbar {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    background: lightgray;
+}
+
+.navbar_rec_indicator {
+    display: flex;
+    transform: translate(250%);
+}
+
+.navbar__links {
+    margin-left: auto;
+}

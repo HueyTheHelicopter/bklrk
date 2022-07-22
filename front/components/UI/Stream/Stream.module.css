@@ -1,0 +1,11 @@
+.WindowName {
+    justify-content: space-around;
+    margin-left: 15px;
+}
+
+.StreamWindow {
+    /* size-adjust: auto; */
+    display:flex;
+    margin-left: 15px;
+    margin-right: 15px;
+}

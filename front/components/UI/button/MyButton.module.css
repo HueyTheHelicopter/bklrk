@@ -1,0 +1,10 @@
+.MyBtn {
+    padding: 5px 5px;
+    color: #E5E5E5;
+    font-size: 14px;
+    background: #3D5664;
+    border: 1px solid #3D5664;
+    cursor: pointer;
+    font-family: 'Roboto';
+    letter-spacing: 0.1em;
+}
