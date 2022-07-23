@@ -269,7 +269,7 @@ def handle_cam(identifier):
 
 @app.route('/api/camera/<int:identifier>/ax_move/<int:res_x>&<int:res_y>&<int:vid_x>&<int:vid_y>', methods=['GET'])
 def move_by_axis(identifier, res_x, res_y, vid_x, vid_y):
-    #http://147.232.24.185/cgi-bin/camctrl/camctrl.cgi?video=0&x=258&y=219&resolution=1280x800&videosize=1280x800&stretch=1
+    #http://{IP}/cgi-bin/camctrl/camctrl.cgi?video=0&x=258&y=219&resolution=1280x800&videosize=1280x800&stretch=1
     cam = Cameras.query.filter_by(id = identifier).first()
     sizes = [1280, 800, 320, 200, 640, 400]
 
