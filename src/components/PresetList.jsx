@@ -53,7 +53,7 @@ const PresetList = ({presets, title}) => {
               <PresetItem pres={show} setPreset={setShow} key={preset.p_name}>{preset}</PresetItem>
             )}
             { show.moves.length > 0 ?
-                <DropdownMenu props={show.moves} p_id={show.p_id}/>
+                <DropdownMenu props={show.moves} p_id={show.p_id} setProps={setShow}/>
                 :
                 <div></div>
             }

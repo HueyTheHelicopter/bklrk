@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useFetching } from '../hooks/useFetching';
 import '../styles/App.css';
 import CamList from '../components/CamList';
 import PostService from '../API/PostService';
 import Loader from '../components/UI/Loader/Loader';
-
+import { RefetchContext } from '../context';
 
 function Dashboard() {
 
   const [cameras, setCamera] = useState([]);
+  const { refetch, setRefetch } = useContext(RefetchContext)
 
   const [fetchCameras, isDataLoading, Error] = useFetching(async () => {
     const cams = await PostService.getCams();
@@ -17,7 +18,7 @@ function Dashboard() {
 
   useEffect(() => {
     fetchCameras();
-  }, [])
+  }, [refetch])
 
   return (
     <div className="App">

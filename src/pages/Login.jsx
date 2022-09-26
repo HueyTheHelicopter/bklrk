@@ -50,7 +50,7 @@ const Login = () => {
                 <div class="rightside">
                     <form className={"input_container"} onSubmit={handleLogin}>
                         <MyInput type="text" placeholder="e-mail" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                        <MyInput type="text" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <MyInput type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         <div className={"login_input_btns"}>
                             <MyButton type="button" onClick={() => handleLogin()}>Login</MyButton>
                             <MyButton  type="button" onClick={() => setModal(true)}>Registration</MyButton>
@@ -62,7 +62,6 @@ const Login = () => {
                     {Error && 
                         <h1 style={{display: 'flex', justifyContent: 'center', marginTop: 50}}>Login Error occured: "{Error.message}"</h1>
                     }
-                    
                 </div>
             </div>
         </div>

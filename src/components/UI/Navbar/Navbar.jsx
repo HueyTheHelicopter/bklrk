@@ -73,10 +73,13 @@ const Navbar = () => {
                         And clickable, to stop recording and save the preset.
                     */}
                         <MyButton onClick={() => toggleRec()}>
-                                stop n save
+                                stop recording
                         </MyButton>
                     </NavItem>
                 }
+                <NavItem>
+                <p style={{fontFamily: "bradley hand, cursive"}}>{user}</p>
+                </NavItem>
                 <NavItem>
                     <MyButton onClick={handleLogout}>
                         Logout
@@ -86,10 +89,7 @@ const Navbar = () => {
                     <MyButton onClick = {() => navigate('/presets')}>Presets</MyButton>
                 </NavItem>
                 <NavItem>
-                    <MyButton onClick = {() => navigate('/dashboard')}>Dashboard</MyButton>
-                </NavItem>
-                <NavItem>
-                    <MyButton onClick = {() => navigate('/map')}>Map</MyButton>
+                    <MyButton onClick = {() => navigate('/dashboard')}>Cameras</MyButton>
                 </NavItem>
             </div>
         </div>

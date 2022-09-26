@@ -8,7 +8,6 @@ from flask_login import LoginManager
 from flask_session import Session
 
 # Create various application instances
-# Order matters: Initialize SQLAlchemy before Marshmallow
 db = SQLAlchemy()
 migrate = Migrate()
 cors = CORS()
@@ -20,7 +19,7 @@ def create_app():
     """Application-factory pattern"""
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://spot:metadon@147.232.24.160:49153/smart-space-dev"
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config["SECRET_KEY"] = "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiVXNlciIsIklzc3VlciI6Iklzc3VlciIsIlVzZXJuYW1lIjoiZGljayIsImV4cCI6MTY0NTAwOTQzOCwiaWF0IjoxNjQ1MDA5NDM4fQ.BlZGABPcXwDJAFuVToGrXMGOnnrF2D6k52O67_f6W-w"
     app.config['SESSION_TYPE'] = 'filesystem'
 

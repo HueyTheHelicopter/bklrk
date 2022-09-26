@@ -7,11 +7,11 @@
     /* transform: translateX(-25%); */
     width: 300px;
     padding: 3px;
-    box-shadow: 3px 4px 5px;
+    box-shadow: 1px 2px 20px;
     max-height: fit-content;
 
     background-color: var(--bgr-gray);
-    border: 5px solid teal;
+    border: 5px solid transparent;
     border-radius: 30px;
     margin-bottom: 100%;
 }
@@ -23,6 +23,12 @@
     justify-items: center;
     align-items: center;
     /* overflow: scroll; */
+}
+
+.camerasInvolved{
+    display: flex;
+    justify-content: center; 
+    font-family: bradley hand, cursive;
 }
 
 .menu_item {

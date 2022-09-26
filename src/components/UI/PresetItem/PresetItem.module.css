@@ -1,15 +1,17 @@
 .preset{
+ background-color: #E5E5E5;
+ border: 2px solid transparent;
+ border-radius: 30px;
+ box-shadow: 1px 2px 3px;
+ font-family: bradley hand, itc;
  display: flex;
  height: 60px;  
  width: 50%;
  flex-direction: row;
- border: 2px solid teal;
  margin: 15px;
  justify-content: space-between;
  align-items: center;
 }
-
-
 
 .preset_content {
     margin-left: 15px;

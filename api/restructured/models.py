@@ -57,9 +57,6 @@ class User(UserMixin, db.Model):
         # orig = generate_password_hash(self.password, method='sha256')
         return check_password_hash(pwhash = self.password, password = password)
 
-    def get_table_name(self):
-        return self.__tablename__
-
     def is_active(self):
         # The is_active() method has always 
         # returning False for banned or deactivated users 

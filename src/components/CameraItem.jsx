@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import MyButton from './UI/button/MyButton';
 import { useNavigate } from "react-router-dom";
-import { RecContext } from '../context';
-import Stream from './UI/Stream/Stream';
 
 const CameraItem = (props) => {
 

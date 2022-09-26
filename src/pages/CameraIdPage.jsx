@@ -14,7 +14,12 @@ const CameraIdPage = (state) => {
     const new_state = location.state
 
     const camRotate = async (e) => {
-        await PostService.rotateCamera(new_state.id, e)
+        const response = await PostService.rotateCamera(new_state.id, e)
+
+        response.status_code === 200 ?
+            console.log('camera: '+ new_state.id + ", direction: " + e)
+        :
+        console.log(response)
 
         if (isRec) {
             if (!sessionStorage.getItem('moveset')) {
@@ -80,11 +85,11 @@ const CameraIdPage = (state) => {
                         </MyButton>
                     </div>
                     <div className='cam_info'>
-                        <strong>ID: {new_state.id}</strong>
-                        <strong>IP: {new_state.ip}</strong> 
-                        <strong style={{fontFamily: 'Roboto'}}>Location: {new_state.loc}</strong>
-                        <strong>Name: {new_state.name}</strong>
-                        <strong>Status: {new_state.status}</strong>
+                        <strong style={{color: 'lightgray'}}>ID: {new_state.id}</strong>
+                        <strong style={{color: 'lightgray'}}>IP: {new_state.ip}</strong> 
+                        <strong style={{color: 'lightgray'}}>Location: <strong  style={{fontFamily: 'Roboto'}}>{new_state.loc}</strong></strong>
+                        <strong style={{color: 'lightgray'}}>Name: {new_state.name}</strong>
+                        <strong style={{color: 'lightgray'}}>Status: {new_state.status}</strong>
                     </div>
                 </div>
             </div>

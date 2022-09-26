@@ -21,27 +21,33 @@
     max-width: 100%;
     height: 100%;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
+    margin-right: auto;
+}
+
+/* .navbar_nav_l {
+    max-width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+} */
+
+.leftSide {
+    margin-right: auto;
 }
 
 .nav_item {
-    width: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.icon_button {
     /* --button-size: calc(var(--nav-size) * 0.5); */
     width: inherit;
     height: inherit;
     border-radius: 30%;
     padding: 5px;
     margin: 5px;
-    display: flex;
-    align-items: space ;
-    justify-content: center;
-    text-decoration: none;
+    /* display: flex; */
+    /* align-items: space; */
+    /* justify-content: flex-end; */
 }
 
 /* .icon_button:nth-child(4) {

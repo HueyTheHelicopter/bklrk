@@ -10,7 +10,8 @@ function Presets() {
 
 const [msg, setMsg] = useState("");
 const [presets, setPresets] = useState([]);
-const [refetch, setRefetch] = useState(Boolean)
+const { refetch, setRefetch } = useContext(RefetchContext)
+
 
 const [fetchPresets, isDataLoading, Error] = useFetching(async () => {
     const response = await PostService.getPresets();
@@ -37,9 +38,7 @@ const [fetchPresets, isDataLoading, Error] = useFetching(async () => {
             <Loader/>
           </div>
         :
-        <RefetchContext.Provider value={{setRefetch}}>
           <PresetList presets={presets} title={"Presets"}/>
-        </RefetchContext.Provider> 
       }
     </div>
   );

@@ -42,6 +42,7 @@ ul {
 
 .App {
     width: 100%;
+    /* background-color: #E5E5E5; */
     display: flex;
     /* align-content:center; */
     flex-direction: column;
@@ -99,7 +100,8 @@ ul {
     background: #C4C4C4;
 }
 
-.camera {
+/* .camera {
+    background-color: #E5E5E5;
     display: flex;
     display: -webkit-box;
     display: -moz-box;
@@ -113,6 +115,29 @@ ul {
     margin-top: 15px;
     justify-content:space-between;
     align-items: center;
+} */
+
+.camera {
+    background-color: #E5E5E5;
+    display: flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    width: 50%;
+    /* flex-wrap: wrap; */
+    padding: 15px;
+    border: 2px solid transparent;
+    border-radius: 30px;
+    box-shadow: 1px 2px 3px;
+    margin-top: 15px;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.camera:hover{
+    filter: brightness(1.08);
 }
 
 .camera__content {
@@ -120,6 +145,11 @@ ul {
 }
 
 .cam_btns.all {
+    border: 2px solid transparent;
+    border-radius: 30px;
+    box-shadow: 1px 1px 30px;
+    background-color: darkgray;
+    padding: 15px;
     margin: auto;
     display: grid;
     grid-gap: 5px;
@@ -139,16 +169,17 @@ ul {
 }
 
 .cam_info {
+    box-shadow: 1px 2px 30px;
     padding: 5px 10px;
     margin: auto;
     display: grid;
     grid-gap: 5px;
     align-content: space-around;
     background-color: #3D5664;
-    border: 5px solid teal;
-    border-radius: 5px;
+    border: 2px solid transparent;
+    border-radius: 30px;
     place-items: center;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: lightgray;
+    /* font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    font-family: bradley hand, cursive;
 }
 

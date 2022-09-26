@@ -16,7 +16,7 @@ export default class PostService {
 
     static async getProps(id) {
         const response = await axios.get(lochost + 'api/camera/' + id)
-        return response.data
+        return response
     }
       
     static async rotateCamera(id, direction) {
@@ -25,7 +25,7 @@ export default class PostService {
     }
       
     static async resetCamera(id) {
-        const response = await axios.post(lochost + "api/camera/" + id + "/reset")
+        const response = await axios.get(lochost + "api/camera/" + id + "/reset")
         return response.data
     }
 
@@ -43,6 +43,20 @@ export default class PostService {
         
         const response = await axios.post(lochost + 'api/presetNameCheck', data)
         return response.data
+    }
+
+    static async rewritePreset(p_id, moveset_json) {
+        const data = {
+            "p_id" : p_id,
+            "new_moveset" : moveset_json
+        }
+
+        try {
+            const response = await axios.post(lochost + '/api/rewriteCamMovesInPreset', data)
+            return response.data
+        } catch (e) {
+            return e
+        }
     }
 
     static async sendNewPreset(moveset, p_name, p_bearer) {
@@ -75,10 +89,9 @@ export default class PostService {
         } catch(e) { alert(e) }
     }
 
-    static async executePreset(p_name) {
+    static async executePreset(p_id) {
         try {
-            const response = await axios.get(lochost + 'api/executePreset', {headers: {p_name: p_name}})
-            console.log(response.data)
+            const response = await axios.get(lochost + 'api/executePreset', {headers: {p_id: p_id}})
             return response.data
         } catch (e) { alert (e) }
     }
@@ -96,11 +109,10 @@ export default class PostService {
         } catch (e) { alert(e) }
     }
 
-    static async deletePreset(p_name, p_bearer) {
+    static async deletePreset(p_id) {
         
         const data = {
-            "p_name": p_name,
-            "p_bearer" : p_bearer
+            "p_id": p_id
         };
 
         try {
@@ -148,7 +160,6 @@ export default class PostService {
             const response = await axios.get(lochost + "api/protected", {headers : {Authorization: 'Bearer ' + token }})
             return response.data
         } catch (e) { alert(e) }
-
     }
 
     static async userRegistrate(props) {

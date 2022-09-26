@@ -1,23 +1,19 @@
-import React, { useContext, useState} from 'react';
+import React, { useContext } from 'react';
 import cl from './PresetItem.module.css';
-import { RecContext, UserContext, RefetchContext } from "../../../context";
+import { UserContext, RefetchContext } from "../../../context";
 import MyButton from '../button/MyButton';
 import PostService from '../../../API/PostService';
-import DropdownMenu from '../Dropdown/Dropdown';
 
 const PresetItem = ({children, setPreset, pres}) => {
 
   const { user } = useContext(UserContext)
-  const { setIsRec } = useContext(RecContext)
   const { setRefetch } = useContext(RefetchContext)
-
-  
 
   const deletePreset = async () => {
     if (user !== children.p_bearer){
       console.log("preset isn't yours! " + user)
     } else {
-      const response = await PostService.deletePreset(children.p_name, children.p_bearer)
+      const response = await PostService.deletePreset(children.p_id)
 
       response.status === 200 ? 
         setRefetch(true)
@@ -56,16 +52,10 @@ const PresetItem = ({children, setPreset, pres}) => {
         <MyButton style={{marginRight: '5px'}} name = "cam_btns" class = "prst" onClick={() => handleEditing()}>
           Edit
         </MyButton>
-        <MyButton name = "cam_btns" class = "prst" onClick={() => PostService.executePreset(children.p_name)}>
+        <MyButton name = "cam_btns" class = "prst" onClick={() => PostService.executePreset(children.p_id)}>
           Execute
         </MyButton>
       </div>
-      {/* {open && 
-        <div className="dropdown">
-          <DropdownMenu props={props.preset.moveset} p_id={props.preset.id}/>
-          
-        </div>
-      } */}
     </div>
   );
 };

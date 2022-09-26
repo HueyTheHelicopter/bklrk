@@ -2,13 +2,14 @@ import React, {useState, useEffect} from 'react';
 import './styles/App.css';
 import {BrowserRouter} from "react-router-dom";
 import AppRouter from './components/AppRouter';
-import { AuthContext, RecContext, UserContext} from './context';
+import { AuthContext, RecContext, UserContext, RefetchContext } from './context';
 import Navbar from './components/UI/Navbar/Navbar';
 import PostService from './API/PostService';
 
 function App() {
   const [ isAuth, setIsAuth ] = useState(Boolean);
   const [ isRec, setIsRec ] = useState(Boolean);
+  const [ refetch, setRefetch ] = useState(Boolean);
   const [ user, setUser ] = useState("");
 
   const fetchUser = async () => {
@@ -41,10 +42,12 @@ function App() {
     <AuthContext.Provider value = {{isAuth, setIsAuth}}>
       <UserContext.Provider value = {{user, setUser}}>
       <RecContext.Provider value={{isRec, setIsRec}}>
+      <RefetchContext.Provider value={{refetch, setRefetch}}>
         <BrowserRouter>
           {isAuth && <Navbar/>}
           <AppRouter/>
         </BrowserRouter>
+        </RefetchContext.Provider> 
       </RecContext.Provider>
       </UserContext.Provider>
     </AuthContext.Provider>
