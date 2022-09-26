@@ -6,15 +6,12 @@ import Stream from './UI/Stream/Stream';
 
 const CameraItem = (props) => {
 
-  const { isRec } = useContext(RecContext)
-
   const state = {
     id: props.camera.id,
     loc: props.camera.location,
     status: props.camera.status,
     name: props.camera.name,
     ip: props.camera.ip_address,
-    move_rec: isRec,
   }
 
 

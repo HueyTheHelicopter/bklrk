@@ -1,0 +1,25 @@
+.preset{
+ display: flex;
+ height: 60px;  
+ width: 50%;
+ flex-direction: row;
+ border: 2px solid teal;
+ margin: 15px;
+ justify-content: space-between;
+ align-items: center;
+}
+
+
+
+.preset_content {
+    margin-left: 15px;
+    align-items: stretch;
+}
+
+.preset_content:nth-child(2) {
+    flex-direction: column;
+}
+
+.preset_buttons {
+    padding: 15px;
+}

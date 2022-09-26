@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="-4.036 0.956 500 500" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16 16c0 1.104-.896 2-2 2h-12c-1.104 0-2-.896-2-2v-8c0-1.104.896-2 2-2h12c1.104 0 2 .896 2 2v8zm8-10l-6 4.223v3.554l6 4.223v-12z" transform="matrix(1, 0, 0, 1, 52.301552, 157.068741)"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 4px; letter-spacing: 1px; white-space: pre;" transform="matrix(1.044899, 0, 0, 1.280493, -9.67028, -51.180004)" x="57.295" y="181.388"> Cameras</text>
+</svg>

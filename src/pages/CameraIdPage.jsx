@@ -28,14 +28,14 @@ const CameraIdPage = (state) => {
     }
       
     const camReset = async () => {
-        const respond = await PostService.resetCamera(new_state.id)
-        console.log(respond)
+        const response = await PostService.resetCamera(new_state.id)
+        console.log(response)
     }
 
     return (
-        <div class = "row">
-            <div class = "col">
-                <div class = "leftside">
+        <div className = "row">
+            <div className = "col">
+                <div className = "leftside">
                     <Stream camera={new_state} location={location}/>
                 </div>
             </div>

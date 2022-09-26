@@ -1,15 +1,17 @@
 import React, {useState, useContext} from 'react';
-import PresetItem from './PresetItem';
+import PresetItem from './UI/PresetItem/PresetItem';
 import MyButton from './UI/button/MyButton';
 import PostService from '../API/PostService';
 import MyModal from './UI/MyModal/MyModal';
 import MyInput from './UI/input/MyInput';
+import DropdownMenu from './UI/Dropdown/Dropdown';
 import { RecContext, UserContext } from '../context';
 
 const PresetList = ({presets, title}) => {
 
     const { setIsRec } = useContext(RecContext)
     const { user } = useContext(UserContext)
+    const [show, setShow] = useState({moves: [], p_id: null});
 
     const [presetName, setPresetName] = useState({
         value: ''
@@ -25,8 +27,9 @@ const PresetList = ({presets, title}) => {
             }
 
             const response = await PostService.presetNameCheck(props)
-            
-            if (response.status === 200) {
+            const rresponse = await PostService.allCamsHome()
+
+            if (response.status === 200 && rresponse.status === 200) {
                 setIsRec(true)
                 sessionStorage.setItem('p_name', presetName.value)
             } 
@@ -40,15 +43,20 @@ const PresetList = ({presets, title}) => {
     }
 
     return (
-        <div> 
+        <div className="App"> 
             <h1 style={{textAlign: 'center', fontStyle: 'Roboto'}}>
                 {title}
             </h1>
             {presets &&
              presets
              .map((preset) =>
-              <PresetItem preset={preset} key={preset.p_name}/>
+              <PresetItem pres={show} setPreset={setShow} key={preset.p_name}>{preset}</PresetItem>
             )}
+            { show.moves.length > 0 ?
+                <DropdownMenu props={show.moves} p_id={show.p_id}/>
+                :
+                <div></div>
+            }
             <MyModal visible={modal} setVisible={setModal}>
                 <MyInput type="text" placeholder="preset name" value={presetName.value} onChange={e => setPresetName({...presetName, value: e.target.value})}/>
                 <MyButton style={{marginTop: 5}} onClick={() => newPreset() && setModal(false)}> Add </MyButton>

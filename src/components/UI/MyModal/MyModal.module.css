@@ -9,6 +9,8 @@
 }
 
 .myModalContent {
+    display: flex;
+    flex-direction: column;
     padding: 25px;
     background: white;
     border-radius: 16px;

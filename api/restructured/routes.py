@@ -1,6 +1,7 @@
 import requests
 from time import sleep
 import cv2
+import json
 from uuid import uuid4
 from datetime import datetime as dt
 from models import Cameras, User, CamPreset
@@ -20,8 +21,14 @@ app = create_app()
 def getPresets():
     presets = CamPreset.query.all()
 
+    for preset in presets:
+        moveset = preset.moveset
+        moves = jsonifyMoves(moveset)
+        preset.moveset = moves
+
     results = [
         {
+            "id" : preset.id,
             "p_name" : preset.name,
             "p_bearer" : preset.bearer,
             "moveset" : preset.moveset,
@@ -29,6 +36,35 @@ def getPresets():
     ]
 
     return jsonify(results)
+
+@app.route("/api/delOneMove", methods=["POST"])
+def delOneMove():
+    p_id = request.json.get("p_id", None)
+    preset = CamPreset.query.filter_by(id = p_id).first()
+
+    if not preset:
+        return jsonify(error = "No preset found")
+    else:
+        moveset = preset.moveset
+        m_id = request.json.get("m_id", None)
+        moves = jsonifyMoves(moveset)
+        ms = moves.pop(m_id)
+        moves = stringifyMoveset(moves)
+        preset.moveset = moves
+        db.session.commit()
+        return jsonify(msg = "move {m_id} was successfully deleted", status = 200)
+
+@app.route("/api/stringMoveset", methods=["GET"])
+def getMovesetString():
+    h_id = request.headers.get("id", None)
+    preset = CamPreset.query.filter_by(id = h_id).first()
+
+    data = {
+        "p_name" : preset.name,        
+        "moveset" : preset.moveset
+    }
+
+    return jsonify(msg = 'OK!', status = 200, data = data)
 
 @app.route("/api/delPreset", methods=["POST"])
 def delPreset():
@@ -59,28 +95,40 @@ def presetNameCheck():
 @app.route("/api/savePreset", methods=["POST"])
 def save_preset():
     p_name = request.json.get("p_name", None)
-    p_bearer = request.json.get("p_bearer", None)
     moveset = request.json.get("moveset", None)
 
-    p_bearer = p_bearer.lower()
-    table_name = CamPreset.__tablename__
+    p_exists = CamPreset.query.filter_by(name = p_name).first()
 
-    new_preset = CamPreset(
-        id = get_uuid(),
-        name = p_name,
-        bearer = p_bearer,
-        moveset = moveset
-    )
+    if p_exists:
+        p_exists.moveset = moveset
+        db.session.commit()
+        return jsonify(msg = 'preset successfully updated', status = 200)
+    else:
+        p_bearer = request.json.get("p_bearer", None)
+        
+        p_bearer = p_bearer.lower()
+        table_name = CamPreset.__tablename__
 
-    db.session.add(new_preset)
-    db.session.commit()
+        new_preset = CamPreset(
+            id = get_uuid(),
+            name = p_name,
+            bearer = p_bearer,
+            moveset = moveset
+        )
 
-    return jsonify(msg = "Preset was created successfully!",
-                   status = 200)
-    
+        db.session.add(new_preset)
+        db.session.commit()
+
+        return jsonify(msg = "Preset was created successfully!",
+                    status = 200)
+        
 @app.route('/api/executePreset', methods=["GET"])
 def exec_preset():
     p_name = request.headers.get("p_name", None)
+
+    if p_name[:-1] == ' ':
+        p_name = p_name.replace(" ", "")
+
     preset = CamPreset.query.filter_by(name = p_name).first()
     
 
@@ -92,6 +140,7 @@ def exec_preset():
         moveset = moveset[:-2] + ""
         moveset = moveset.split(",")
         print(moveset)
+        print(type(moveset))
         print(moveset[-1])
 
         home = False
@@ -120,7 +169,7 @@ def exec_preset():
             
 
         is_moved.clear()
-        return jsonify(msg = "moveset was executed",
+        return jsonify(msg = p_name + " was executed",
                        status = 200)
 
 @app.route("/api/registrate", methods=["POST"])
@@ -148,14 +197,14 @@ def register():
                 id = get_uuid(),
                 username = username,
                 email = email,
-                joined_at = dt.now(),
+                joined_at = dt.now().strftime("%Y-%m-%d %H:%M:%S"),
                 admin = False,
                 active = True)
                 # session["user_id"] = new_user.id
             except BaseException as error:
                 print(f"Unexpected {err=}, {type(err)=}")
 
-            print("user was added")  # Create an instance of the User class
+            print("user " + new_user.username + " was added")  # Create an instance of the User class
             
             new_user.set_password(password)
             
@@ -181,26 +230,29 @@ def login():
     # print(f"User password is: {user.password}")  
     # print(f"Matching: {user.check_password(password = password)}")
 
-    if user and user.check_password(password = password):
-        if user.is_authenticated():
-            print('alredy logged in')
-            return jsonify(msg = "You're logged in!",
-                           user_id = user.id,
-                           status = 200)
-        else:
-            user.set_authenticated(True)
-            db.session.commit()
-            session["user_id"] = user.id
-            access_token = create_access_token(identity = email)
-            print(f'Sending token: {access_token}')
-            return jsonify(msg = "You logged in successfully!",
-                           access_token = access_token,
-                           user_id = user.id, 
-                           status = 200)
+    if user is None:
+        return jsonify(error = "User not found.", status = 400)
     else:
-        return jsonify(error = "Password is wrong!", status = 400)
+        if user and user.check_password(password = password):
+            if user.is_authenticated():
+                print('alredy logged in')
+                return jsonify(msg = "You're logged in!",
+                            user_id = user.id,
+                            status = 200)
+            else:
+                user.set_authenticated(True)
+                db.session.commit()
+                session["user_id"] = user.id
+                access_token = create_access_token(identity = email)
+                print(f'Sending token: {access_token}')
+                return jsonify(msg = "You logged in successfully!",
+                            access_token = access_token,
+                            user_id = user.id, 
+                            status = 200)
+        else:
+            return jsonify(error = "Password is wrong!", status = 400)
         
-    return jsonify(msg = "Ooops, something went wrong :*(", status = 401)
+    return jsonify(error = "Ooops, something went wrong :*(", status = 401)
 
 @app.route("/api/logout", methods = ["POST"])
 def logout():
@@ -314,6 +366,19 @@ def turn_cam(identifier, direction):
 
     return jsonify(response)
 
+@app.route('/api/allcamshome', methods=['GET'])
+def allCamsHome():
+    print('Hi!')
+    cams = Cameras.query.all()
+
+    for cam in cams:
+        if check_status(cam.ip_address) == 'online':
+            requests.get("http://%s/cgi-bin/camctrl/camctrl.cgi?move=home" %(cam.ip_address))
+        else:
+            print(cam.ip_address + " is offline")
+
+    return jsonify(msg = "All cameras at 'home'", status = 200)
+
 @app.route('/api/camera/<int:identifier>/reset', methods=['POST'])
 def cam_reset(identifier):
     # call api POST `http://{{ip}}/cgi-bin/admin/getparam.cgi`
@@ -366,6 +431,26 @@ def get_new_id(t_name, model):
 
 def get_uuid():
     return uuid4().hex
+
+def stringifyMoveset(json_moveset):
+    string = str()
+    # print(json_moveset)
+
+    for move in json_moveset:
+        string += move['content']
+        string += ', '
+
+    return string
+
+def jsonifyMoves(str_moveset):
+    # Delete comma and space from the end of string
+    str_moveset = str_moveset[:-2] + ""
+    # Split camera|move pairs by commas
+    str_moveset = str_moveset.split(",")
+    # make a list of dicts (JSON_ify)
+    moves = [{'id': i, 'content': s.strip()} for i, s in enumerate(str_moveset)]
+
+    return moves
 
 def turn_home(cam_id):
     return(turn_cam(cam_id, 'home'))

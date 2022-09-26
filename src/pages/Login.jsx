@@ -20,8 +20,11 @@ const Login = () => {
             "password": password,
         };
 
-        await PostService.userLogin(props)
-        window.location.href = "/";
+        const response = await PostService.userLogin(props)
+        response.status === 200 ?
+            window.location.href = "/"
+        :
+        alert(response.error)
     })
 
     const regNewUser = async (user) => {
@@ -34,26 +37,24 @@ const Login = () => {
     }
 
     return (
+        <div className={"App"}>
         <div class="row" style={{height: '100vh'}}>
             <div class="col">
                 <div class="leftside">
                     <h1 style={{fontFamily: 'Roboto', fontSize: 52, color: '#C4C4C4'}}>
                         UVT SMART SPACE
                     </h1>
-                    {isDataLoading &&
-                        <div style={{display: 'flex', justifyContent: 'center'}}>
-                            <Loader/>
-                        </div> 
-                    }
                 </div>
             </div>
             <div class="col">
                 <div class="rightside">
-                    <form onSubmit={handleLogin}>
+                    <form className={"input_container"} onSubmit={handleLogin}>
                         <MyInput type="text" placeholder="e-mail" value={email} onChange={(e) => setEmail(e.target.value)}/>
                         <MyInput type="text" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                        <MyButton type="button" onClick={() => handleLogin()}>Login</MyButton>
-                        <MyButton style={{marginLeft: '72.8%'}} type="button" onClick={() => setModal(true)}>Registration</MyButton>
+                        <div className={"login_input_btns"}>
+                            <MyButton type="button" onClick={() => handleLogin()}>Login</MyButton>
+                            <MyButton  type="button" onClick={() => setModal(true)}>Registration</MyButton>
+                        </div>
                     </form>
                     <MyModal visible={modal} setVisible={setModal}>
                         <NewUserForm create={regNewUser}/>
@@ -64,6 +65,8 @@ const Login = () => {
                     
                 </div>
             </div>
+        </div>
+        {isDataLoading && <Loader/> }
         </div>
     );
 };

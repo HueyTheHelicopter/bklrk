@@ -1,7 +1,8 @@
 .MyInpt {
-    width: 100%;
+    width: auto;
     padding: 5px 15px;
     margin: 5px 0;
     border: 1px solid #3D5664;
     background: #E5E5E5;
+    place-content: center;
 }

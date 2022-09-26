@@ -29,6 +29,11 @@ export default class PostService {
         return response.data
     }
 
+    static async allCamsHome() {
+        const response = await axios.get(lochost + 'api/allcamshome')
+        return response.data
+    }
+
     static async presetNameCheck(props) {
 
         const data = {
@@ -63,12 +68,32 @@ export default class PostService {
         } catch (e) { alert (e) }
     }
 
+    static async movesetString(id) {
+        try {
+            const response = await axios.get(lochost+ 'api/stringMoveset', {headers: {'id': id}})
+            return response.data
+        } catch(e) { alert(e) }
+    }
+
     static async executePreset(p_name) {
         try {
             const response = await axios.get(lochost + 'api/executePreset', {headers: {p_name: p_name}})
             console.log(response.data)
             return response.data
         } catch (e) { alert (e) }
+    }
+
+    static async delOneMove(p_id, m_id){
+        try {
+            const data = {
+                'p_id' : p_id,
+                'm_id' : m_id
+            }
+
+            const response = await axios.post(lochost + 'api/delOneMove', data)
+            return response.data
+
+        } catch (e) { alert(e) }
     }
 
     static async deletePreset(p_name, p_bearer) {
@@ -93,11 +118,18 @@ export default class PostService {
 
         try {
             const resp = await axios.post(lochost + "api/login", data)
-            const res_data = resp.data
-            sessionStorage.setItem("access_token", res_data.access_token)
-            sessionStorage.setItem("my_id", res_data.user_id)
-        } catch (e) {
-            sessionStorage.setItem("access_error", e)
+            
+            if (resp.data.status === 200) {
+
+                sessionStorage.setItem("access_token", resp.data.access_token)
+                sessionStorage.setItem("my_id", resp.data.user_id)
+
+                return resp.data
+            } else { return resp.data }
+
+            
+        } catch (error) {
+            sessionStorage.setItem("access_error", error)
         }
     }
 

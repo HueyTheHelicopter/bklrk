@@ -5,7 +5,7 @@ const CamList = ({cameras, title}) => {
 
 
     return (
-        <div>
+        <div className="App">
             <h1 style={{textAlign: 'center'}}>
                 {title}
             </h1>

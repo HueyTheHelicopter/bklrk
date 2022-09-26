@@ -4,25 +4,27 @@ import '../styles/App.css';
 import PresetList from '../components/PresetList';
 import PostService from '../API/PostService';
 import Loader from '../components/UI/Loader/Loader';
+import { RefetchContext } from '../context';
 
 function Presets() {
 
 const [msg, setMsg] = useState("");
 const [presets, setPresets] = useState([]);
+const [refetch, setRefetch] = useState(Boolean)
 
 const [fetchPresets, isDataLoading, Error] = useFetching(async () => {
     const response = await PostService.getPresets();
     
       response.length === 0 ?
         setMsg("You have no presets")
-        : setMsg(null);
+        : setMsg(null); setRefetch(false)
 
     setPresets(response);
   })
 
   useEffect(() => {
     fetchPresets();
-  }, [])
+  }, [refetch])
 
   return (
     <div className="App">
@@ -34,7 +36,10 @@ const [fetchPresets, isDataLoading, Error] = useFetching(async () => {
         ? <div style={{display: 'flex', justifyContent: 'center', marginTop: 50}}>
             <Loader/>
           </div>
-        : <PresetList presets={presets} title={"Presets"}/>
+        :
+        <RefetchContext.Provider value={{setRefetch}}>
+          <PresetList presets={presets} title={"Presets"}/>
+        </RefetchContext.Provider> 
       }
     </div>
   );

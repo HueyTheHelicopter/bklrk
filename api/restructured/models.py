@@ -82,6 +82,7 @@ class User(UserMixin, db.Model):
 
     def set_authenticated(self, bool):
         if bool == True:
+            self.last_login = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             self._anonymous = False
             self._authenticated = bool
         else:
@@ -94,7 +95,7 @@ class User(UserMixin, db.Model):
 class CamPreset(db.Model):
     __tablename__ = 'cam_presets'
 
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.String(100), primary_key = True)
     name = db.Column(db.String(50), index = False, unique = True, nullable = False)
     bearer = db.Column(db.String(50), index = False, unique = False, nullable = False)
     moveset = db.Column(db.String(500), index = False, unique = False, nullable = False)

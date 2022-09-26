@@ -30,7 +30,7 @@ const NewUserForm = () => {
     })
 
     return (
-        <form>
+        <form className={"new_user_container"}>
             <MyInput 
                 value={user.username}
                 onChange={e => setUser({...user, username: e.target.value})}
@@ -55,7 +55,7 @@ const NewUserForm = () => {
                 type="text"
                 placeholder="Please repeat your password"
             />
-            <MyButton style={{text_align: 'center'}} onClick={addNewUser}>Confirm</MyButton>
+            <MyButton style={{marginTop: '5px'}} onClick={addNewUser}>Confirm</MyButton>
       </form>
     );
 };
